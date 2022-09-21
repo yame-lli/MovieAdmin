@@ -14,7 +14,7 @@ export default defineConfig({
     vue(),
     unocss({
       rules: [
-       
+
       ],
       presets: [presetAttributify(), presetUno()],
       preflights: [],
@@ -32,6 +32,15 @@ export default defineConfig({
     alias: {
       "@": resolve(__dirname, 'src'), // 路径别名
     }
-  }, 
- 
+  },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://10.60.60.150:8081',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '') // 不可以省略rewrite
+      }
+    }
+  }
+
 })

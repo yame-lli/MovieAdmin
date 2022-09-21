@@ -1,173 +1,76 @@
 <template>
-  <div class="w-100% mt-10 flex justify-center">
-    <el-form ref="ruleFormRef" :model="ruleForm" :rules="rules" label-width="120px" class="demo-ruleForm w-50%"
-      :size="formSize" status-icon hide-required-asterisk>
-      <el-form-item label="Activity name" prop="name">
-        <el-input v-model="ruleForm.name" />
-      </el-form-item>
-      <el-form-item label="Activity zone" prop="region">
-        <el-select v-model="ruleForm.region" placeholder="Activity zone">
-          <el-option label="Zone one" value="shanghai" />
-          <el-option label="Zone two" value="beijing" />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="Activity count" prop="count">
-        <el-select-v2 v-model="ruleForm.count" placeholder="Activity count" :options="options" />
-      </el-form-item>
-      <el-form-item label="Activity time" required>
-        <el-col :span="6">
-          <el-form-item prop="date1">
-            <el-date-picker v-model="ruleForm.date1" type="date" label="Pick a date" placeholder="Pick a date"
-              style="width: 100%" />
-          </el-form-item>
-        </el-col>
-        <el-col class="text-center" :span="2">
-          <span class="text-gray-500">-</span>
-        </el-col>
-        <el-col :span="6">
-          <el-form-item prop="date2">
-            <el-time-picker v-model="ruleForm.date2" label="Pick a time" placeholder="Pick a time"
-              style="width: 100%" />
-          </el-form-item>
-        </el-col>
-      </el-form-item>
-      <el-form-item label="Instant delivery" prop="delivery">
-        <el-switch v-model="ruleForm.delivery" />
-      </el-form-item>
-      <el-form-item label="Activity type" prop="type">
-        <el-checkbox-group v-model="ruleForm.type">
-          <el-checkbox label="Online activities" name="type" />
-          <el-checkbox label="Promotion activities" name="type" />
-          <el-checkbox label="Offline activities" name="type" />
-          <el-checkbox label="Simple brand exposure" name="type" />
-        </el-checkbox-group>
-      </el-form-item>
-      <el-form-item label="Resources" prop="resource">
-        <el-radio-group v-model="ruleForm.resource">
-          <el-radio label="Sponsorship" />
-          <el-radio label="Venue" />
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item label="Activity form" prop="desc">
-        <el-input v-model="ruleForm.desc" type="textarea" />
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="submitForm(ruleFormRef)">Create</el-button>
-        <el-button @click="resetForm(ruleFormRef)">Reset</el-button>
-      </el-form-item>
-    </el-form>
+  <div class="w-100% mt-10 flex  justify-center">
+    <Form :config="userFormConfig.formItems" :model-value="user" @update:model-value="change"
+      class="rounded border-0.5 w-100% border-gray-200 flex flex-col items-center p-14 bg-white">
+      <template #footer>
+        <div class="flex flex-col items-center	">
+          <el-button type="primary" class="w-40%">修改</el-button>
+          <el-link type="info" class="mt-8" @click="visible = true">修改密码</el-link>
+        </div>
 
+        <el-dialog v-model="visible" :show-close="false">
+          <template #header="{ close, titleId, titleClass }">
+            <div class="my-header flex justify-between">
+              <h4 :id="titleId" :class="titleClass">修改密码</h4>
+              <el-button type="danger" @click="close">
+                <el-icon class="el-icon--left">
+                  <CircleCloseFilled />
+                </el-icon>
+                Close
+              </el-button>
+            </div>
+          </template>
+          <el-form label-width="100px" class="flex flex-col items-center">
+            <el-form-item label="旧密码" class="w-70%">
+              <el-input />
+            </el-form-item>
+            <el-form-item label="新密码" class="w-70%">
+              <el-input />
+            </el-form-item>
+            <el-form-item label="确认新密码" class="w-70%">
+              <el-input />
+            </el-form-item>
+
+            <el-button class="w-50% ml-100px" type="primary">提交</el-button>
+          </el-form>
+        </el-dialog>
+      </template>
+    </Form>
   </div>
 </template>
 
 <script setup lang='ts'>
-import { reactive, ref } from 'vue'
-import type { FormInstance, FormRules } from 'element-plus'
-import { ElNotification } from 'element-plus'
+import Form from '@/components/Form/index.vue';
+import { userFormConfig } from './UserFormConfig'
+import { ref, reactive } from 'vue'
+import { ElButton, ElDialog } from 'element-plus'
+import { CircleCloseFilled } from '@element-plus/icons-vue'
 
 
-
-const formSize = ref('default')
-const ruleFormRef = ref<FormInstance>()
-const ruleForm = reactive({
-  name: 'Hello',
-  region: '',
-  count: '',
-  date1: '',
-  date2: '',
-  delivery: false,
-  type: [],
-  resource: '',
-  desc: '',
-})
-
-const rules = reactive<FormRules>({
-  name: [
-    { required: true, message: 'Please input Activity name', trigger: 'blur' },
-    { min: 3, max: 5, message: 'Length should be 3 to 5', trigger: 'blur' },
-  ],
-  region: [
-    {
-      required: true,
-      message: 'Please select Activity zone',
-      trigger: 'change',
-    },
-  ],
-  count: [
-    {
-      required: true,
-      message: 'Please select Activity count',
-      trigger: 'change',
-    },
-  ],
-  date1: [
-    {
-      type: 'date',
-      required: true,
-      message: 'Please pick a date',
-      trigger: 'change',
-    },
-  ],
-  date2: [
-    {
-      type: 'date',
-      required: true,
-      message: 'Please pick a time',
-      trigger: 'change',
-    },
-  ],
-  type: [
-    {
-      type: 'array',
-      required: true,
-      message: 'Please select at least one activity type',
-      trigger: 'change',
-    },
-  ],
-  resource: [
-    {
-      required: true,
-      message: 'Please select activity resource',
-      trigger: 'change',
-    },
-  ],
-  desc: [
-    { required: true, message: 'Please input activity form', trigger: 'blur' },
-  ],
-})
-
-const submitForm = async (formEl: FormInstance | undefined) => {
-  if (!formEl) return
-  await formEl.validate((valid, fields) => {
-    if (valid) {
-      ElNotification({
-        title: 'Success',
-        message: 'This is a success message',
-        type: 'success',
-      })
-      console.log('submit!')
-    } else {
-      ElNotification({
-        title: 'Error',
-        message: 'This is an error message',
-        type: 'error',
-      })
-      console.log('error submit!', fields)
-    }
-  })
+type User = {
+  username: string,
+  password: string,
+  telephone: string,
+  email: string
 }
 
-const resetForm = (formEl: FormInstance | undefined) => {
-  if (!formEl) return
-  formEl.resetFields()
+let user: User = reactive({
+  username: '123',
+  password: '123456',
+  telephone: '123456789',
+  email: '12456789@qq.com',
+})
+
+const change = (field: keyof User, value: string) => {
+  user[`${field}`] = value
 }
 
-const options = Array.from({ length: 10000 }).map((_, idx) => ({
-  value: `${idx + 1}`,
-  label: `${idx + 1}`,
-}))
+const visible = ref(false)
+
 </script>
 
 <style scoped>
-
+:deep() .el-overlay-dialog {
+  @apply bg-gray-200 m-0 bg-opacity-50
+}
 </style>

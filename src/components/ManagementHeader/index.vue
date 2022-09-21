@@ -4,7 +4,7 @@
             <el-button :icon="Search" />
         </template>
     </el-input>
-    <el-button type="default" :icon="ArrowLeft" class="absolute left-8% top-1%">返回</el-button>
+    <el-button type="default" :icon="ArrowLeft" class="absolute left-8 top-10">返回</el-button>
 </template>
 
 <script setup lang='ts'>

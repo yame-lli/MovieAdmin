@@ -6,6 +6,7 @@ import piniaPlugin from './piniaPlugin'
 import './reset.css'
 import 'uno.css'
 import 'element-plus/theme-chalk/el-notification.css'
+import 'element-plus/theme-chalk/el-dialog.css'
 
 const store = createPinia()
 store.use(piniaPlugin({

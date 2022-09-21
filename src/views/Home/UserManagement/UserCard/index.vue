@@ -1,6 +1,6 @@
 <template>
  
-        <el-card shadow="hover" class="mb-6 box-border w-fit mr-6">
+        <el-card shadow="hover" class="mb-6 box-border w-fit mr-6 " @click="toUserDetail">
             <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
             <div class="flex flex-col ml-6 justify-center">
                 <span class="font-semibold text-xl text-gray-600  ">User</span>
@@ -13,6 +13,15 @@
 </template>
 
 <script setup lang='ts'>
+import {useRouter} from 'vue-router'
+
+const router = useRouter()
+const toUserDetail=()=>{
+    router.push({
+        name:'UserDetail'
+    })
+}
+
 
 </script>
 

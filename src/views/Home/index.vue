@@ -1,20 +1,20 @@
 <template>
-    <div class="home h-full">
+    <div class="home h-full flex flex-col ">
         <Header></Header>
-        <div class="main flex h-full mt-8">
+        <div class="main flex overflow-auto h-[calc(100%-60px)]">
             <Menu></Menu>
-            <div class="contain flex-1 px-8 overflow-hidden box-border relative">
-                <MovieManagement></MovieManagement>
+            <div class="contain flex-1 px-8 box-border relative overflow-auto bg-gray-100 pt-8">
+                <router-view></router-view>
             </div>
         </div>
     </div>
 </template>
 
 <script setup lang='ts'>
-import * as echarts from 'echarts/core';
+
 import Header from '@/components/Header/index.vue'
 import Menu from '@/components/Menu/index.vue'
-import MovieManagement from './MovieManagement/index.vue';
+
 </script>
 
 <style scoped>

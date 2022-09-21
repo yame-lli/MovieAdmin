@@ -1,42 +1,54 @@
 <template>
-    <div class="menu flex flex-col items-center">
-        <el-radio-group v-model="isCollapse" style="margin-bottom: 20px">
-            <el-radio-button :label="false">展开</el-radio-button>
-            <el-radio-button :label="true">缩进</el-radio-button>
+    <div class="menu flex flex-col items-center pt-8">
+        <el-radio-group v-model="isCollapse" class="mb-20px mx-4">
+            <el-radio-button :label="true">
+                <el-icon>
+                    <ArrowLeft />
+                </el-icon>
+            </el-radio-button>
+            <el-radio-button :label="false">
+                <el-icon>
+                    <ArrowRight />
+                </el-icon>
+            </el-radio-button>
         </el-radio-group>
         <el-menu default-active="1" class="el-menu-vertical-demo" :collapse="isCollapse" @open="handleOpen"
             @close="handleClose">
-            <el-menu-item index="1">
-
+            <el-menu-item index="1" @click="toCharts">
                 <el-icon>
                     <icon-menu />
                 </el-icon>
                 <template #title>主页</template>
-
             </el-menu-item>
-            <el-menu-item index="2">
+            <el-menu-item index="2" @click="toUserManagement">
                 <el-icon>
-                    <icon-menu />
+                    <User />
                 </el-icon>
                 <template #title>用户管理</template>
             </el-menu-item>
-            <el-menu-item index="3">
+            <el-menu-item index="3" @click="toMovieManagement">
                 <el-icon>
-                    <document />
+                    <VideoCamera />
                 </el-icon>
                 <template #title>电影管理</template>
             </el-menu-item>
-            <el-menu-item index="4">
+            <el-menu-item index="4" @click="toCinemaManagement">
                 <el-icon>
-                    <setting />
+                    <School />
                 </el-icon>
                 <template #title>影院管理</template>
             </el-menu-item>
             <el-menu-item index="5">
                 <el-icon>
-                    <setting />
+                    <Tickets />
                 </el-icon>
                 <template #title>资讯管理</template>
+            </el-menu-item>
+            <el-menu-item index="6" @click="toOrderManagement">
+                <el-icon>
+                    <Ticket />
+                </el-icon>
+                <template #title>订单管理</template>
             </el-menu-item>
         </el-menu>
     </div>
@@ -45,19 +57,56 @@
 <script setup lang='ts'>
 import { ref } from 'vue'
 import {
-    Document,
+    Tickets,
     Menu as IconMenu,
-    Location,
-    Setting,
+    User,
+    VideoCamera,
+    School,
+    Ticket,
+    ArrowLeft,
+    ArrowRight
 } from '@element-plus/icons-vue'
+import { useRouter } from 'vue-router'
 
-const isCollapse = ref(true)
+const isCollapse = ref(false)
 const handleOpen = (key: string, keyPath: string[]) => {
     console.log(key, keyPath)
 }
 const handleClose = (key: string, keyPath: string[]) => {
     console.log(key, keyPath)
 }
+
+const router = useRouter()
+const toUserManagement = () => {
+    router.push({
+        name: 'UserManagement'
+    })
+}
+const toMovieManagement = () => {
+    router.push({
+        name: 'MovieManagement'
+    })
+}
+
+const toCinemaManagement = () => {
+    router.push({
+        name: 'CinemaManagement'
+    })
+}
+
+const toOrderManagement = () => {
+    router.push({
+        name: 'OrderManagement'
+    })
+}
+
+const toCharts = () => {
+    router.push({
+        name: 'Charts'
+    })
+}
+
+
 </script>
 
 <style scoped>
