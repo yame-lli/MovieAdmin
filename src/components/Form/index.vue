@@ -37,7 +37,7 @@
                     </template>
 
                     <template v-if="item.type === 'radio'">
-                        <el-radio-group v-model="radio2" class="ml-4">
+                        <el-radio-group v-model="radio2" class="">
                             <el-radio label="1">Option 1</el-radio>
                             <el-radio label="2">Option 2</el-radio>
                         </el-radio-group>
@@ -129,5 +129,6 @@ const radio2 = ref('1')
 .el-form-item{
     @apply mb-8
 }
+
 </style>
 

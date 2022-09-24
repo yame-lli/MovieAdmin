@@ -1,14 +1,14 @@
 <template>
-    <div class="flex flex-wrap mt-10 justify-center">
-        <MovieCard class="w-10%"></MovieCard>
-        <MovieCard class="w-10%"></MovieCard>
-        <MovieCard class="w-10%"></MovieCard>
-        <MovieCard class="w-10%"></MovieCard>
-        <MovieCard class="w-10%"></MovieCard>
-        <MovieCard class="w-10%"></MovieCard>
-        <MovieCard class="w-10%"></MovieCard>
-        <MovieCard class="w-10%"></MovieCard>
-        <MovieCard class="w-10%"></MovieCard>
+    <div class="grid grid-cols-6 justify-items-center  mt-10 ">
+        <MovieCard></MovieCard>
+        <MovieCard></MovieCard>
+        <MovieCard></MovieCard>
+        <MovieCard></MovieCard>
+        <MovieCard></MovieCard>
+        <MovieCard></MovieCard>
+        <MovieCard></MovieCard>
+        <MovieCard></MovieCard>
+        <MovieCard></MovieCard>
     </div>
 </template>
 

@@ -1,7 +1,7 @@
 <template>
   <div class="w-100% mt-10 flex  justify-center">
     <Form :config="userFormConfig.formItems" :model-value="user" @update:model-value="change"
-      class="rounded border-0.5 w-100% border-gray-200 flex flex-col items-center p-14 bg-white">
+      class="rounded border-0.5 w-100% border-gray-200 items-center p-14 bg-white" formStyle="flex flex-col items-center" itemStyle="w-40%">
       <template #footer>
         <div class="flex flex-col items-center	">
           <el-button type="primary" class="w-40%">修改</el-button>
