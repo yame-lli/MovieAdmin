@@ -11,15 +11,7 @@ import serve from './index'
 
 //根据订单id查找订单
 
-export const apiGetOrderById = (data: any) => {
-    return serve({
-        url: '/selectOrderById',
-        method: 'GET',
-        params: {
-            id: data.id
-        }
-    })
-}
+
 
 
 
