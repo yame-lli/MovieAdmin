@@ -9,7 +9,7 @@ export const userFormConfig: IForm = {
       placeholder: '请输入用户名'
     },
     {
-      field:'telephone',
+      field:'phone',
       type: 'input',
       label: '电话号码',
       placeholder: '请输入电话号码'
@@ -19,6 +19,12 @@ export const userFormConfig: IForm = {
       type: 'input',
       label: '邮箱',
       placeholder: '请输入邮箱',
+    },
+    {
+      field:'password',
+      type: 'input',
+      label: '密码',
+      placeholder: '请输入密码',
     },
   ]
 }

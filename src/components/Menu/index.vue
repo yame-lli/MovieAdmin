@@ -12,43 +12,69 @@
                 </el-icon>
             </el-radio-button>
         </el-radio-group>
-        <el-menu default-active="1" class="el-menu-vertical-demo" :collapse="isCollapse" @open="handleOpen"
-            @close="handleClose">
+        <el-menu :default-active="route.name" class="el-menu-vertical-demo overflow-auto" :collapse="isCollapse" @open="handleOpen"
+            @close="handleClose" >
             <el-menu-item index="1" @click="toCharts">
                 <el-icon>
                     <icon-menu />
                 </el-icon>
                 <template #title>主页</template>
             </el-menu-item>
-            <el-menu-item index="2" @click="toUserManagement">
-                <el-icon>
-                    <User />
-                </el-icon>
-                <template #title>用户管理</template>
-            </el-menu-item>
-            <el-menu-item index="3" @click="toMovieManagement">
-                <el-icon>
-                    <VideoCamera />
-                </el-icon>
-                <template #title>电影管理</template>
-            </el-menu-item>
-            <el-menu-item index="4" @click="toCinemaManagement">
-                <el-icon>
-                    <School />
-                </el-icon>
-                <template #title>影院管理</template>
-            </el-menu-item>
-            <el-menu-item index="5">
-                <el-icon>
-                    <Tickets />
-                </el-icon>
-                <template #title>资讯管理</template>
-            </el-menu-item>
-            <el-menu-item index="6" @click="toOrderManagement">
+            <el-sub-menu index="UserList">
+                <template #title>
+                    <el-icon>
+                        <User />
+                    </el-icon>
+                    <span>用户
+                    </span>
+                </template>
+                <el-menu-item index="UserList" class=""  @click="toUserManagement">用户管理</el-menu-item>
+               
+
+            </el-sub-menu>
+            <el-sub-menu index="3" >
+
+                <template #title>
+                    <el-icon>
+                        <VideoCamera />
+                    </el-icon><span>电影</span>
+                </template>
+
+                <el-menu-item index="MovieList" class="" @click="toMovieManagement">电影管理</el-menu-item>
+                <el-menu-item index="AddMovie" class="" @click="toAddMovie">添加电影</el-menu-item>
+
+
+
+            </el-sub-menu>
+            <el-sub-menu index="4" >
+                <template #title>
+                    <el-icon>
+                        <School />
+                    </el-icon><span>影院</span>
+                </template>
+
+                <el-menu-item index="CinemaList" class="" @click="toCinemaManagement">影院管理</el-menu-item>
+                <el-menu-item index="AddCinema" class="" @click="toAddCinema">添加影院</el-menu-item>
+
+
+            </el-sub-menu>
+            <el-sub-menu index="5">
+
+                <template #title>
+                    <el-icon>
+                        <Tickets />
+                    </el-icon><span>资讯</span>
+                </template>
+
+                <el-menu-item index="NewsList" class="">资讯管理</el-menu-item>
+                <el-menu-item index="AddNews" class="">添加资讯</el-menu-item>
+
+            </el-sub-menu>
+            <el-menu-item index="OrderList" @click="toOrderManagement">
                 <el-icon>
                     <Ticket />
                 </el-icon>
-                <template #title>订单管理</template>
+                <template #title>订单</template>
             </el-menu-item>
         </el-menu>
     </div>
@@ -66,7 +92,9 @@ import {
     ArrowLeft,
     ArrowRight
 } from '@element-plus/icons-vue'
-import { useRouter } from 'vue-router'
+import { useRouter,useRoute } from 'vue-router'
+
+const route = useRoute()
 
 const isCollapse = ref(false)
 const handleOpen = (key: string, keyPath: string[]) => {
@@ -105,7 +133,16 @@ const toCharts = () => {
         name: 'Charts'
     })
 }
-
+const toAddMovie = ()=>{
+     router.push({
+        name: 'AddMovie'
+    })
+}
+const toAddCinema = ()=>{
+     router.push({
+        name: 'AddCinema'
+    })
+}
 
 </script>
 

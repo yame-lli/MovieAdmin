@@ -9,7 +9,7 @@ export const movieFormConfig: IForm = {
             placeholder: '请输入电影名字'
         },
         {
-            field: 'movieEName',
+            field: 'movieFName',
             type: 'input',
             label: '英文名字',
             placeholder: '请输入电影名字'
@@ -28,24 +28,20 @@ export const movieFormConfig: IForm = {
         },
 
         {
-            field: 'movieDurantion',
-            type: 'input',
-            label: '电影时长',
+            field: 'movieDuration',
+            type: 'input-number',
+            label: '电影时长/分钟',
         },
         {
-            field: 'movietype',
-            type: 'select',
+            field: 'movieType',
+            type: 'input',
             label: '电影类型',
+            placeholder: '请输入类型',
         },
         {
             field: 'movieScore',
             type: 'input-number',
             label: '电影评分',
-        },
-        {
-            field: 'movieBoxOffice',
-            type: 'input-number',
-            label: '电影票房',
         },
         {
             field: 'movieReleaseDate',
@@ -56,14 +52,15 @@ export const movieFormConfig: IForm = {
             field: 'movieState',
             type: 'radio',
             label: '电影状态',
+            options:[{label:'下架',value:0},{label:'热映中',value:1},{label:'即将上映',value:2}]
         },
-
         {
-            field: 'moviePoster',
-            type: 'textarea',
-            label: '电影海报',
-
-        }, {
+            field:'movieCountry',
+            type:'input',
+            label:'地区',
+            placeholder: '请输入地区',
+        },
+        {
             field: 'movieDetail',
             type: 'textarea',
             label: '电影详情',

@@ -22,7 +22,7 @@
 
             <template #footer>
                 <el-button type="primary" size="large" class="relative left-50% transform mt-8 -translate-x-50% w-30"
-                    @click="updateMovie">修改
+                    @click="addMovie">添加电影
                 </el-button>
             </template>
         </Form>
@@ -36,14 +36,15 @@ import { movieFormConfig } from '../MovieFormConfig'
 import { ref } from 'vue'
 import { ElMessage } from 'element-plus'
 import { Plus } from '@element-plus/icons-vue'
-import { apiGetMovieById, apiUpdateMovie } from '@/api/movie'
+import { apiGetMovieById, apiAddMovie } from '@/api/movie'
 import { useRoute } from 'vue-router'
-import useStore from '@/store';
 
 import type { UploadProps } from 'element-plus'
 
 const imageUrl = ref('')
 let movie = ref<MovieDetail>({} as MovieDetail)
+movie.value.movieScore=0
+movie.value.movieDuration=0
 type MovieDetail = {
     id: number;
     movieCName: string;
@@ -65,16 +66,7 @@ type MovieDetail = {
 }
 
 const route = useRoute()
-const { movieStore } = useStore()
-movieStore.reqGetMovieById({ id: route.query.id }).then(() => {
-    movie.value = movieStore.currentMovie
-    movie.value.movieReleaseDate = movie.value.movieReleaseDate.slice(0, 10)
-    movie.value.movieDuration = Number((movie.value.movieDuration as string).slice(0, (movie.value.movieDuration as string).length - 2))
-    imageUrl.value = `data:image/png;base64,` + movie.value.movieImg
-    console.log(movie.value);
 
-
-})
 
 
 const change = (field: keyof MovieDetail, value: any) => {
@@ -84,7 +76,7 @@ const change = (field: keyof MovieDetail, value: any) => {
 }
 
 let file = ref<File>()
-const updateMovie = () => {
+const addMovie = () => {
     if (!file.value) {
         const photoName = `${new Date().getTime()}`
         file.value = dataURLtoFile(
@@ -97,7 +89,7 @@ const updateMovie = () => {
 
     let formData = new FormData()
     formData.append("file", file.value as File)
-    formData.append("id", movie.value.id.toString())
+   
     formData.append("movieCName", movie.value.movieCName)
     formData.append("movieFName", movie.value.movieFName)
     formData.append("movieActor", movie.value.movieActor)
@@ -106,8 +98,8 @@ const updateMovie = () => {
     formData.append("movieDuration", movie.value.movieDuration + `分钟`)
     formData.append("movieType", movie.value.movieType)
     formData.append("movieScore", movie.value.movieScore.toString())
-    formData.append("movieBoxOffice", movie.value.movieBoxOffice.toString())
-    formData.append("movieCommentCount", movie.value.movieCommentCount.toString())
+    formData.append("movieBoxOffice", '0')
+    formData.append("movieCommentCount", '0')
     formData.append("movieReleaseDate", movie.value.movieReleaseDate.replaceAll('-', '/'))
     formData.append("movieCountry", movie.value.movieCountry)
     formData.append("movieState", movie.value.movieState.toString())
@@ -115,11 +107,11 @@ const updateMovie = () => {
     console.log(formData);
 
 
-    apiUpdateMovie(formData).then((result) => {
+    apiAddMovie(formData).then((result) => {
         if (result.code == 200) {
             ElMessage({
                 showClose: true,
-                message: '修改成功',
+                message: '添加成功',
                 type: 'success',
             })
         }
@@ -151,7 +143,6 @@ const changeUpload: UploadProps['onChange'] = (uploadFile: any) => {
     imageUrl.value = URL.createObjectURL(uploadFile.raw)
 
 }
-
 </script>
 
 <style scoped>

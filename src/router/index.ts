@@ -55,6 +55,10 @@ const routes: Array<RouteRecordRaw> = [
                         path: '/home/movieManagement/movieDetail',
                         name: 'MovieDetail',
                         component: () => import('@/views/Home/MovieManagement/MovieDetail/index.vue'),
+                    }, {
+                        path: '/home/movieManagement/addMovie',
+                        name: 'AddMovie',
+                        component: () => import('@/views/Home/MovieManagement/AddMovie/index.vue'),
                     }]
                 }, {
                     path: '/home/cinemaManagement',
@@ -69,6 +73,10 @@ const routes: Array<RouteRecordRaw> = [
                         path: '/home/cinemaManagement/cinemaDetail',
                         name: 'CinemaDetail',
                         component: () => import('@/views/Home/CinemaManagement/CinemaDetail/index.vue'),
+                    },{
+                        path: '/home/cinemaManagement/addCinema',
+                        name: 'AddCinema',
+                        component: () => import('@/views/Home/CinemaManagement/AddCinema/index.vue'),
                     }]
                 }]
             },

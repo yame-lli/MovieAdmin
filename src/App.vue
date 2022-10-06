@@ -17,7 +17,7 @@ body,
 
 /* 设置滚动条的样式 */
 ::-webkit-scrollbar {
-    width: 12px;
+    display: none;
 }
 
 /* 滚动槽 */

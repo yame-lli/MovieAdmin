@@ -3,7 +3,7 @@
         <Header></Header>
         <div class="main flex overflow-auto h-[calc(100%-60px)]">
             <Menu></Menu>
-            <div class="contain flex-1 px-8 box-border relative overflow-auto bg-gray-100 pt-8">
+            <div class="contain flex-1 p-8 box-border relative overflow-auto bg-gray-100 ">
                 <router-view></router-view>
             </div>
         </div>

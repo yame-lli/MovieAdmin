@@ -1,27 +1,75 @@
 <template>
+  <el-card shadow="hover"  :body-style="{ padding: '0px' }" @click="toMovieDetail">
+    <img :src="`data:image/jpg;base64,`+props.movieDetail.movieImg" class="image w-100%" />
 
-        <el-card shadow="hover" class="mb-8 mr-8" @click="toMovieDetail">
-            <img class="w-100%" src="https://p0.pipi.cn/mmdb/d2dad5927a30fa8d33b8605f671206f584437.jpg?imageView2/1/w/218/h/300" alt="">
-            <span class="my-4 font-semibold text-gray-600">无名</span>
-        </el-card>
-    
+    <slot name="info"></slot>
+
+    <slot name="bottom"></slot>
+
+
+  </el-card>
 </template>
 
-<script setup lang='ts'>
-import {useRouter} from 'vue-router'
+<script setup lang="ts">
+import { useRouter } from 'vue-router'
+import { ref, onMounted } from 'vue'
+type MovieDetail = {
+  id: number;
+  movieCName: string;
+  movieFName: string;
+  movieActor: string;
+  movieDirector: string;
+  movieDetail: string;
+  movieDuration: string;
+  movieType: string;
+  movieScore: number;
+  movieBoxOffice: number;
+  movieCommentCount: number;
+  movieReleaseDate: string;
+  movieCountry: string;
+  moviePicture: string;
+  movieState: number;
+  commentList?: any;
+  movieImg: string;
+}
+
+type Props = {
+  movieDetail: MovieDetail
+}
+
+const props = defineProps<Props>()
+console.log(props);
+
+onMounted(() => {
+  console.log('moviecard');
+  
+  console.log(props);
+
+})
+
 
 
 const router = useRouter()
-const toMovieDetail=()=>{
-    router.push({
-        name:'MovieDetail'
-    })
+const toMovieDetail = () => {
+  router.push({
+    name: 'MovieDetail',
+    query: {
+      id: props.movieDetail.id
+    }
+  })
 }
+
+
 </script>
 
 <style scoped>
-:deep() .el-card__body{
-   @apply p-0 flex flex-col items-center;
+.el-card {
+  box-sizing: border-box;
+  @apply duration-50 transition
 }
 
+.image {
+  width: 100%;
+  display: block;
+}
 </style>

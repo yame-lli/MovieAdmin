@@ -1,45 +1,59 @@
 <template>
-    <div >
+    <div>
         <div class="header">
             <slot name="header"> </slot>
         </div>
-        <el-form :label-width="labelWidth" label-position="top" ref="ruleFormRef" status-icon :model="modelValue" :class="formStyle">
-            <template v-for="item in config" :key="item.label">
+        <el-form :label-width="labelWidth" label-position="top" ref="ruleFormRef" status-icon :model="modelValue"
+            :class="formStyle">
+            <template v-for="item in config" :key="item.label ">
 
-                <el-form-item v-if="!item.isHidden" :label="item.label" :rules="item.rules" 
-                    :prop="item.field" :class="itemStyle" >
+                <el-form-item v-if="!item.isHidden" :label="item.label" :rules="item.rules" :prop="item.field"
+                    :class="itemStyle">
                     <template v-if="item.type === 'input' || item.type === 'password'">
                         <el-input class="h-40px" :placeholder="item.placeholder"
                             :show-password="item.type === 'password'" :modelValue="modelValue[`${item.field}`]"
-                            @update:modelValue="valueChange($event,item.field)" />
+                            @update:modelValue="valueChange($event, item.field)" />
                     </template>
 
                     <template v-if="item.type === 'textarea'">
-                        <el-input class="" :placeholder="item.placeholder"  v-model="textarea2"
-                            type="textarea" :autosize="{ minRows: 2, maxRows: 4 }"/>
+                        
+                            <el-input class="" :placeholder="item.placeholder" :modelValue="modelValue[`${item.field}`]"
+                                @update:modelValue="valueChange($event, item.field)" type="textarea"
+                                :autosize="{ minRows: 4, maxRows: 4 }" />
+                    
                     </template>
 
 
                     <template v-if="item.type === 'select'">
-                        <el-select class="" :placeholder="item.placeholder" multiple v-model="value1"
-                            type="textarea" style="width: 240px">
-                            <el-option v-for="item in options" :key="item.value" :label="item.label"
-                                :value="item.value" />
+                        <el-select class="" :placeholder="item.placeholder" multiple v-model="value1" type="textarea">
+                            <el-option v-for="option in item.options" :label="option.label" :value="option.value" />
                         </el-select>
                     </template>
 
-                    <template v-if="item.type === 'input-number'">
-                        <el-input-number v-model="num" :precision="2" :step="0.1" :max="10"></el-input-number>
+                    <template v-if="(item.type === 'input-number' && (item.field === 'movieScore'||'cinemaScore'))">
+                        <el-input-number :modelValue="modelValue[`${item.field}`]" @update:modelValue="valueChange($event, item.field)" :precision="1" :step="0.1" :max="10">
+                        </el-input-number>
                     </template>
+                    <template v-else-if="(item.type === 'input-number' && item.field === 'movieDuration')">
+                        <el-input-number :modelValue="modelValue[`${item.field}`]" @update:modelValue="valueChange($event, item.field)" :step="1" :max="500">
+                        </el-input-number>
+                    </template>
+                    <!-- <template v-else-if="(item.type === 'input-number' && item.field === 'cinemaScore')">
+                        <el-input-number :modelValue="modelValue[`${item.field}`]" @update:modelValue="valueChange($event, item.field)" :precision="3" :step="0.001"
+                            :max="500"></el-input-number>
+                    </template> -->
+
+
 
                     <template v-if="item.type === 'datePicker'">
-                        <el-date-picker v-model="value2" type="date" placeholder="Pick a day" />
+                        <el-date-picker :modelValue="modelValue[`${item.field}`]" @update:modelValue="valueChange($event, item.field)" type="date"
+                            placeholder="Pick a day"  value-format="YYYY-MM-DD"/>
                     </template>
 
                     <template v-if="item.type === 'radio'">
-                        <el-radio-group v-model="radio2" class="">
-                            <el-radio label="1">Option 1</el-radio>
-                            <el-radio label="2">Option 2</el-radio>
+                        <el-radio-group :modelValue="modelValue[`${item.field}`]" @update:modelValue="valueChange($event, item.field)"  class="">
+                            <el-radio :label="option.value" v-for="option in item.options">{{ option.label }}</el-radio>
+
                         </el-radio-group>
                     </template>
 
@@ -57,7 +71,7 @@ import type { IFormItem } from './type'
 import { defineProps, withDefaults, ref, defineEmits } from 'vue'
 import type { FormInstance } from 'element-plus'
 
-
+const ruleFormRef = ref<FormInstance>()
 interface Props {
     config: IFormItem[] // 表单配置项
     labelWidth?: string // 每个表单标题宽度
@@ -69,9 +83,9 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-    formItems: () => [],
+
     labelWidth: '80px',
-  
+
 })
 
 const emit = defineEmits<{
@@ -79,7 +93,7 @@ const emit = defineEmits<{
 }>()
 
 
-const ruleFormRef = ref<FormInstance>()
+
 
 console.log(props.modelValue)
 
@@ -89,33 +103,9 @@ const valueChange = (value: any, field: string) => {
 }
 
 const value1 = ref([])
-const textarea2 = ref('')
-const options = [
-    {
-        value: 'Option1',
-        label: 'Option1',
-    },
-    {
-        value: 'Option2',
-        label: 'Option2',
-    },
-    {
-        value: 'Option3',
-        label: 'Option3',
-    },
-    {
-        value: 'Option4',
-        label: 'Option4',
-    },
-    {
-        value: 'Option5',
-        label: 'Option5',
-    },
-]
 
-const num = ref(1)
 
-const value2 = ref('')
+
 
 const radio2 = ref('1')
 </script>
@@ -126,9 +116,8 @@ const radio2 = ref('1')
     font-size: 18px;
     font-weight: 700;
 }
-.el-form-item{
-    @apply mb-8
+.el-form-item:last-of-type{
+    @apply col-span-2
 }
-
 </style>
 
